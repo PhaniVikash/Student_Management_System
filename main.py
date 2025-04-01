@@ -26,6 +26,7 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.table)
 
     def load_data(self):
+
         pass
 
 
