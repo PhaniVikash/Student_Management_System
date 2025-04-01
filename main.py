@@ -1,3 +1,5 @@
+from tkinter.font import names
+
 from PyQt6.QtWidgets import (QApplication, QLabel, QWidget,
                              QGridLayout, QLineEdit, QPushButton, QMainWindow,
                              QTableWidget, QTableWidgetItem, QDialog,QVBoxLayout,QComboBox)
@@ -61,25 +63,44 @@ class InsertDialog(QDialog):
         '''student_name_label = QLabel("Name of student")
         layout.addWidget(student_name_label)'''
 
-        student_name = QLineEdit()
-        student_name.setPlaceholderText("Name of the Student :")
-        layout.addWidget(student_name)
+        self.student_name = QLineEdit()
+        self.student_name.setPlaceholderText("Name of the Student :")
+        layout.addWidget(self.student_name)
 
         # Add courses using Combobox
-        course_name = QComboBox()
+        self.course_name = QComboBox()
         courses = ["Biology",'Maths','Physics','Chemistry','Telugu']
-        course_name.addItems(courses)
-        layout.addWidget(course_name)
+        self.course_name.addItems(courses)
+        layout.addWidget(self.course_name)
 
         # Add mobile Number Widget
-        mobile_number = QLineEdit()
-        mobile_number.setPlaceholderText("Enter Mobile Number :")
-        layout.addWidget(mobile_number)
+        self.mobile_number = QLineEdit()
+        self.mobile_number.setPlaceholderText("Enter Mobile Number :")
+        layout.addWidget(self.mobile_number)
 
-
-
+        # Add Submit Button
+        button = QPushButton("Register")
+        button.clicked.connect(self.add_student)
+        layout.addWidget(button)
 
         self.setLayout(layout)
+
+    def add_student(self):
+
+        name = self.student_name.text()
+        course = self.course_name.itemText(self.course_name.currentIndex())
+        mobile = self.mobile_number.text()
+
+        connection = sqlite3.connect("database.db")
+        cursor = connection.cursor()
+        cursor.execute("INSERT INTO students (name , course, mobile) VALUES (?,?,?)",
+                       (name,course,mobile))
+        connection.commit()
+        cursor.close()
+        connection.close()
+        main_window.load_data()
+
+
 
 
 
