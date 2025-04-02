@@ -253,6 +253,13 @@ class EditDialog(QDialog):
         #Refresh table
         main_window.load_data()
 
+        self.close()
+        confirmation_widget = QMessageBox()
+        confirmation_widget.setWindowTitle("Success")
+        confirmation_widget.setText("Record was Updated Successfully")
+        confirmation_widget.exec()
+
+
 class DeleteDialog(QDialog):
     def __init__(self):
         super().__init__()
