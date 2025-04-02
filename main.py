@@ -126,6 +126,7 @@ class SearchDialog(QDialog):
         layout.addWidget(self.student_name)
 
         search_button = QPushButton("Search")
+        search_button.clicked.connect(self.search)
         layout.addWidget(search_button)
 
         self.setLayout(layout)
