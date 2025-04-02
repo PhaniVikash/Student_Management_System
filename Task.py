@@ -4,7 +4,6 @@ from PyQt6.QtWidgets import (QApplication, QLabel, QWidget,
 from PyQt6.QtGui import QAction, QIcon
 import sys
 import sqlite3
-from PyQt6.QtCore import Qt
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -21,7 +20,8 @@ class MainWindow(QMainWindow):
         add_student_action.triggered.connect(self.insert)
         file_menu_item.addAction(add_student_action)
 
-        search_student_action = QAction("Search", self)
+
+        search_student_action = QAction("Search",self)
         search_student_action.triggered.connect(self.search)
         edit_menu_item.addAction(search_student_action)
 
@@ -130,20 +130,8 @@ class SearchDialog(QDialog):
 
         self.setLayout(layout)
 
-    def search(self):
-        name = self.student_name.text()
-        connection = sqlite3.connect("database.db")
-        cursor = connection.cursor()
-        result = connection.execute("SELECT * FROM students WHERE name = ?",(name,))
-        rows = list(result)
-        print(rows)
-        items = main_window.table.findItems(name,Qt.MatchFlag.MatchFixedString)
-        for item in items:
-            print(item)
-            main_window.table.item(item.row(),1).setSelected(True)
 
-        cursor.close()
-        connection.close()
+
 
 
 
